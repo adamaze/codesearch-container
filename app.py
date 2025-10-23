@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # Configuration
-REPOS_PATH = "/dev/shm/codesearch"
+REPOS_PATH = "/repos"
 EXCLUDE_DIRS = {".git", "elastiflow"}
 EXCLUDE_FILES = {"jquery.min.js", "jquery.dataTables.min.js", "jquery.dataTables.min.css"}
 
