@@ -6,7 +6,8 @@ import os
 app = Flask(__name__)
 
 # Configuration
-REPOS_PATH = "/repos"
+REPOS_PATH = os.environ.get('REPOS_PATH', '/repos')
+BASE_URL = os.environ.get('BASE_URL', 'http://localhost:5000')
 EXCLUDE_DIRS = {".git", "elastiflow"}
 EXCLUDE_FILES = {"jquery.min.js", "jquery.dataTables.min.js", "jquery.dataTables.min.css"}
 
@@ -341,13 +342,13 @@ def index():
 
 @app.route('/opensearch.xml')
 def opensearch():
-    return '''<?xml version="1.0" encoding="UTF-8"?>
+    return f'''<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>CodeSearch</ShortName>
   <Description>Search through code repositories</Description>
-  <Url type="text/html" template="http://localhost:5000/?q={searchTerms}"/>
+  <Url type="text/html" template="{BASE_URL}/?q={{searchTerms}}"/>
   <LongName>CodeSearch - Multi-Repo Code Search</LongName>
-  <Url type="application/x-suggestions+json" template="http://localhost:5000/api/suggestions?q={searchTerms}"/>
+  <Url type="application/x-suggestions+json" template="{BASE_URL}/api/suggestions?q={{searchTerms}}"/>
   <Contact>admin@codesearch.local</Contact>
   <Tags>code search repositories</Tags>
   </OpenSearchDescription>'''
